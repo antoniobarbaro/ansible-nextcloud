@@ -9,6 +9,9 @@ nextcloud_domain: nextcloud.mydomain.com
 nextcloud_trusted_domains: ['localhost', '{{ nextcloud_domain }}']
 nextcloud_ssl_cert: /etc/nginx/nextcloud.crt
 nextcloud_ssl_key: /etc/nginx/nextcloud.key
+nextcloud_generate_cert: true
+nextcloud_ssl_cert_file: /root/files/certs/aws/nextcloud.crt
+nextcloud_ssl_key_file: /root/files/certs/aws/nextcloud.key
 nextcloud_ssl_subject: '/C=CH/ST=Lucerne/L=Lucerne/O=/CN={{ nextcloud_domain }}'
 nextcloud_working_dir: /nextcloud
 nextcloud_web_root: /var/www/nextcloud

@@ -1,5 +1,5 @@
-rbicker.nextcloud
-=================
+Role nextcloud
+==============
 
 * install or upgrade nextcloud (12) on centos 7
 * install dependencies: nginx, php7.1, redis, mariadb
@@ -37,6 +37,9 @@ nextcloud_mysql_db: nextcloud # name of nextcloud mysql db
 nextcloud_mysql_user: nextcloud # username for nextcloud mysql db
 nextcloud_mysql_pw: nextcloud  # password for nextcloud mysql db
 nextcloud_upgrade: false # upgrade instance if given nextcloud_version does not match the installed version
+nextcloud_generate_cert: true # generate self-signed cert
+nextcloud_ssl_cert_file: /root/files/certs/aws/nextcloud.crt # ssl cert file to copy if not generated
+nextcloud_ssl_key_file: /root/files/certs/aws/nextcloud.key # ssl cert key file to copy if not generated
 ```
 
 Example Playbook
