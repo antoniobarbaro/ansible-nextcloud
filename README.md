@@ -40,6 +40,7 @@ nextcloud_upgrade: false # upgrade instance if given nextcloud_version does not 
 nextcloud_generate_cert: true # generate self-signed cert
 nextcloud_ssl_cert_file: /root/files/certs/aws/nextcloud.crt # ssl cert file to copy if not generated
 nextcloud_ssl_key_file: /root/files/certs/aws/nextcloud.key # ssl cert key file to copy if not generated
+nextcloud_data_root_no_owner: false # if true not set nginx owner for data root directory. usefull with mounted directory
 ```
 
 Example Playbook

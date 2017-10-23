@@ -30,9 +30,31 @@
   with_items:
     - '{{ nextcloud_web_root }}/apps/'
     - '{{ nextcloud_web_root }}/config/'
-    - '{{ nextcloud_data_root }}'
     - '{{ nextcloud_web_root }}/themes/'
     - '{{ nextcloud_web_root }}/updater/'
+
+- name: installation - ensure working files directory exist with correct owner
+  file:
+    path: '{{ item  }}'
+    owner: nginx
+    group: nginx
+    recurse: yes
+    state: directory
+  with_items:
+    - '{{ nextcloud_data_root }}'
+  when: not nextcloud_data_root_no_owner 
+
+# funziona se utente nginx appartiene al gruppo assegnato alla cartella data root
+- name: installation - ensure working files directory exist without setting owner
+  file:
+    path: '{{ item  }}'
+    recurse: yes
+    state: directory
+    mode: 0770
+  with_items:
+    - '{{ nextcloud_data_root }}'
+  when: nextcloud_data_root_no_owner 
+
 
 - name: installation - ensure SELinux file context mapping definitions are correct
   sefcontext:
