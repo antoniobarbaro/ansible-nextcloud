@@ -24,3 +24,15 @@ nextcloud_mysql_db: nextcloud
 nextcloud_mysql_user: nextcloud
 nextcloud_mysql_pw: nextcloud
 nextcloud_upgrade: false
+nextcloud_mail_config: false
+nextcloud_mail_smtpmode: 'smtp'
+nextcloud_mail_smtpauthtype: 'LOGIN'
+nextcloud_mail_smtpsecure: 'tls'
+nextcloud_mail_smtphost: 'smtp.office365.com'
+nextcloud_mail_smtpport: 587
+nextcloud_mail_smtpauth: 1
+nextcloud_mail_from_address: 'ncloud'
+nextcloud_mail_domain: 'gmail.com'
+nextcloud_mail_smtpname: 'ncloud@gmail.com'
+nextcloud_mail_smtppassword: 'xxxx'
+nextcloud_force_configuration: false

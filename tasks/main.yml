@@ -27,3 +27,7 @@
 
 - include: 'upgrade.yml'
   when: nextcloud_upgrade and not new_installation.changed and current_version.stdout != nextcloud_version
+
+- name: configure config.php system file
+  include: 'configuration.yml'
+  when: new_installation.changed or nextcloud_force_configuration

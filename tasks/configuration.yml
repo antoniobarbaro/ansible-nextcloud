@@ -1,0 +1,90 @@
+# configure config.php system file
+
+# performance tuning
+# https://docs.nextcloud.com/server/12/admin_manual/configuration_server/server_tuning.html
+
+- name: performance tuning - configure APCu for local caching
+  command: 'php {{ nextcloud_web_root }}/occ config:system:set memcache.local --value "\OC\Memcache\APCu"'
+  become: true
+  become_user: nginx
+
+- name: performance tuning - use redis for file locking
+  command: 'php {{ nextcloud_web_root }}/occ config:system:set memcache.locking --value "\OC\Memcache\Redis"'
+  become: true
+  become_user: nginx
+
+- name: performance tuning - connect to redis on localhost
+  command: 'php {{ nextcloud_web_root }}/occ config:system:set redis "host" --value "localhost"'
+  become: true
+  become_user: nginx
+
+- name: performance tuning - connect to redis on port 6379
+  command: 'php {{ nextcloud_web_root }}/occ config:system:set redis "port" --value 6379'
+  become: true
+  become_user: nginx
+
+- name: performance tuning - js and css asset management
+  command: 'php {{ nextcloud_web_root }}/occ config:system:set asset-pipeline.enabled --value true'
+  become: true
+  become_user: nginx
+
+# mail configuration
+- name: mail configuration - smtp mode
+  command: 'php {{ nextcloud_web_root }}/occ config:system:set mail_smtpmode --value "{{ nextcloud_mail_smtpmode }}"'
+  become: true
+  become_user: nginx
+  when: nextcloud_mail_config    
+
+- name: mail configuration - smtpauthtype
+  command: 'php {{ nextcloud_web_root }}/occ config:system:set mail_smtpauthtype --value "{{ nextcloud_mail_smtpauthtype }}"'
+  become: true
+  become_user: nginx
+  when: nextcloud_mail_config    
+
+- name: mail configuration - smtpsecure
+  command: 'php {{ nextcloud_web_root }}/occ config:system:set mail_smtpsecure --value "{{ nextcloud_mail_smtpsecure }}"'
+  become: true
+  become_user: nginx
+  when: nextcloud_mail_config    
+
+- name: mail configuration - smtphost
+  command: 'php {{ nextcloud_web_root }}/occ config:system:set mail_smtphost --value "{{ nextcloud_mail_smtphost }}"'
+  become: true
+  become_user: nginx
+  when: nextcloud_mail_config    
+
+- name: mail configuration - smtpport
+  command: 'php {{ nextcloud_web_root }}/occ config:system:set mail_smtpport --value "{{ nextcloud_mail_smtpport }}"'
+  become: true
+  become_user: nginx
+  when: nextcloud_mail_config                
+
+- name: mail configuration - smtpauth
+  command: 'php {{ nextcloud_web_root }}/occ config:system:set mail_smtpauth --value {{ nextcloud_mail_smtpauth }}'
+  become: true
+  become_user: nginx
+  when: nextcloud_mail_config               
+
+- name: mail configuration - from_address
+  command: 'php {{ nextcloud_web_root }}/occ config:system:set mail_from_address --value "{{ nextcloud_mail_from_address }}"'
+  become: true
+  become_user: nginx
+  when: nextcloud_mail_config                       
+
+- name: mail configuration - domain
+  command: 'php {{ nextcloud_web_root }}/occ config:system:set mail_domain --value "{{ nextcloud_mail_domain }}"'
+  become: true
+  become_user: nginx
+  when: nextcloud_mail_config                      
+
+- name: mail configuration - smtpname
+  command: 'php {{ nextcloud_web_root }}/occ config:system:set mail_smtpname --value "{{ nextcloud_mail_smtpname }}"'
+  become: true
+  become_user: nginx
+  when: nextcloud_mail_config                              
+
+- name: mail configuration - smtppassword
+  command: 'php {{ nextcloud_web_root }}/occ config:system:set mail_smtppassword --value "{{ nextcloud_mail_smtppassword }}"'
+  become: true
+  become_user: nginx
+  when: nextcloud_mail_config                                 
