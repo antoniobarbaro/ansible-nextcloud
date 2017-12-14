@@ -23,7 +23,7 @@ nextcloud_admin_pw: admin
 nextcloud_mysql_db: nextcloud
 nextcloud_mysql_user: nextcloud
 nextcloud_mysql_pw: nextcloud
-nextcloud_upgrade: false
+#nextcloud_upgrade: false
 nextcloud_mail_config: false
 nextcloud_mail_smtpmode: 'smtp'
 nextcloud_mail_smtpauthtype: 'LOGIN'

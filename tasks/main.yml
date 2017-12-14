@@ -17,16 +17,16 @@
   become: true
   become_user: nginx
   register: current_version
-  when: nextcloud_upgrade and not new_installation.changed
+  when: not new_installation.changed
   changed_when: False
 
 - name: fail the play when current version cannot be determined
   fail:
     msg: current nextcloud version cannot be determined
-  when: nextcloud_upgrade and current_version.stdout == ''
+  when: not new_installation.changed and current_version.stdout == ''
 
 - include: 'upgrade.yml'
-  when: nextcloud_upgrade and not new_installation.changed and current_version.stdout != nextcloud_version
+  when: not new_installation.changed and current_version.stdout != nextcloud_version
 
 - name: configure config.php system file
   include: 'configuration.yml'

@@ -1,0 +1,57 @@
+- name: permissions - ensure webroot directory has correct permissions
+  file:
+    path: '{{ nextcloud_web_root }}'
+    owner: root
+    group: nginx
+    recurse: yes
+    state: directory
+
+- name: permissions - ensure occ is executable
+  file:
+    path: '{{ nextcloud_web_root }}/occ'
+    mode: a+x
+
+- name: permissions - ensure directories exist with correct permissions
+  file:
+    path: '{{ item  }}'
+    owner: nginx
+    group: nginx
+    recurse: yes
+    state: directory
+  with_items:
+    - '{{ nextcloud_web_root }}/apps/'
+    - '{{ nextcloud_web_root }}/config/'
+    - '{{ nextcloud_web_root }}/themes/'
+    - '{{ nextcloud_web_root }}/updater/'
+
+- name: permissions - ensure working files directory exist with correct owner
+  file:
+    path: '{{ item  }}'
+    owner: nginx
+    group: nginx
+    recurse: yes
+    state: directory
+  with_items:
+    - '{{ nextcloud_data_root }}'
+  when: not nextcloud_data_root_no_owner 
+
+# funziona se utente nginx appartiene al gruppo assegnato alla cartella data root
+- name: permissions - ensure working files directory exist without setting owner
+  file:
+    path: '{{ item  }}'
+    recurse: yes
+    state: directory
+    mode: 0770
+  with_items:
+    - '{{ nextcloud_data_root }}'
+  when: nextcloud_data_root_no_owner 
+
+
+- name: permissions - ensure .users.ini settings are adjusted for large files
+  copy: 
+    src: user.ini
+    dest: '{{ nextcloud_web_root }}/.user.ini'
+
+## configure selinux if is in status enforcing or permissive. skip if is disabled
+- include: 'selinux.yml'
+  when: not ansible_selinux.status == 'disabled'  
