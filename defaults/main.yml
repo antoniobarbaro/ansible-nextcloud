@@ -23,7 +23,8 @@ nextcloud_admin_pw: admin
 nextcloud_mysql_db: nextcloud
 nextcloud_mysql_user: nextcloud
 nextcloud_mysql_pw: nextcloud
-#nextcloud_upgrade: false
+# set force_configuration: true if one of these parameters has changed
+nextcloud_force_configuration: false
 nextcloud_mail_config: false
 nextcloud_mail_smtpmode: 'smtp'
 nextcloud_mail_smtpauthtype: 'LOGIN'
@@ -35,4 +36,5 @@ nextcloud_mail_from_address: 'ncloud'
 nextcloud_mail_domain: 'gmail.com'
 nextcloud_mail_smtpname: 'ncloud@gmail.com'
 nextcloud_mail_smtppassword: 'xxxx'
-nextcloud_force_configuration: false
+nextcloud_loglevel: '2'
+nextcloud_log_rotate_size: '104857600'

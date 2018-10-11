@@ -88,3 +88,14 @@
   become: true
   become_user: nginx
   when: nextcloud_mail_config                                 
+
+
+- name: log level configuration
+  command: 'php {{ nextcloud_web_root }}/occ config:system:set loglevel --value "{{ nextcloud_loglevel }}" --type=integer'
+  become: true
+  become_user: nginx                               
+
+- name: log rotate size configuration
+  command: 'php {{ nextcloud_web_root }}/occ config:system:set log_rotate_size --value "{{ nextcloud_log_rotate_size }}" --type=integer'
+  become: true
+  become_user: nginx                                
