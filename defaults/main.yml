@@ -18,6 +18,7 @@ nextcloud_web_root: /var/www/nextcloud
 nextcloud_data_root: '{{ nextcloud_working_dir }}/data'
 nextcloud_data_root_no_owner: false
 nextcloud_backup_dir: '{{ nextcloud_working_dir }}/backup'
+nextcloud_backup_data: true
 nextcloud_admin_user: admin
 nextcloud_admin_pw: admin
 nextcloud_mysql_db: nextcloud

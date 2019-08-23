@@ -32,6 +32,10 @@
 - name: upgrade - copy current installation to {{ nextcloud_backup_dir }}/nextcloud-{{ timestamp.stdout }}
   command: 'cp -r {{ nextcloud_web_root }} {{ nextcloud_backup_dir }}/nextcloud-{{ timestamp.stdout }}'
 
+- name: upgrade - copy data to {{ nextcloud_backup_dir }}/nextcloud-data-{{ timestamp.stdout }}
+  command: 'cp -r {{ nextcloud_data_root }} {{ nextcloud_backup_dir }}/nextcloud-data-{{ timestamp.stdout }}'
+  when: nextcloud_backup_data
+
 - name: upgrade - remove current installation
   file:
     name: '{{ nextcloud_web_root }}'
