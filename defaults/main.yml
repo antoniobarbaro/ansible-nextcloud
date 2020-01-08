@@ -39,3 +39,6 @@ nextcloud_mail_smtpname: 'ncloud@gmail.com'
 nextcloud_mail_smtppassword: 'xxxx'
 nextcloud_loglevel: '2'
 nextcloud_log_rotate_size: '104857600'
+nextcloud_install_nginx_php: true
+nextcloud_install_mariadb: true
+nextcloud_opcache_file: 'opcache.ini'

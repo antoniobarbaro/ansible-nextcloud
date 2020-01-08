@@ -1,0 +1,59 @@
+- name: install mariadb
+  yum:
+    name: 'mariadb-server'
+    state: present
+
+
+- name: ensure mysql server.cnf is present
+  copy:
+    src: server.cnf
+    dest: /etc/my.cnf.d/server.cnf
+  notify: 
+    - restart mariadb
+
+- name: ensure mariadb-server is enabled and started
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+
+- name: ensure the mariadb root password is set
+  mysql_user:
+    login_user: root
+    name: root
+    password: '{{ mysql_root_pw }}'
+    
+- name: ensure /root/.my.cnf is present
+  template:
+    src: my.cnf.j2
+    dest: /root/.my.cnf
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: ensure anonymous mysql user is absent
+  mysql_user:
+    name: ''
+    login_user: root
+    host_all: yes
+    state: absent
+
+- name: ensure mysql test database is absent
+  mysql_db:
+    name: test
+    login_user: root
+    state: absent
+
+- name: ensure nextcloud database {{ nextcloud_mysql_db }} exists
+  mysql_db:
+    name: '{{ nextcloud_mysql_db }}'
+    login_user: root
+    state: present
+
+- name: ensure database user {{ nextcloud_mysql_user }} exists and has all privileges  on {{ nextcloud_mysql_db }}
+  mysql_user:
+    name: '{{ nextcloud_mysql_user }}'
+    password: '{{ nextcloud_mysql_pw }}'
+    login_user: root
+    priv: '{{ nextcloud_mysql_db }}.*:ALL,GRANT'
+    state: present
