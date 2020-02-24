@@ -13,7 +13,7 @@
   when: new_installation.changed
 
 - name: check version string for upgrade
-  shell: "/var/www/nextcloud/occ -V | grep -oE '[[:digit:]]+.[[:digit:]]+.[[:digit:]]+'"
+  shell: "{{ nextcloud_web_root }}/occ -V | grep -oE '[[:digit:]]+.[[:digit:]]+.[[:digit:]]+'"
   become: true
   become_user: nginx
   register: current_version
