@@ -5,7 +5,17 @@
   unarchive:
     src: '{{ nextcloud_repo_url  }}/nextcloud-{{ nextcloud_version }}.tar.bz2'
     remote_src: true
-    dest: '{{ nextcloud_web_root }}/..'
+    dest: '/tmp'
+
+- name: test if nextcloud was unarchived
+  stat: path=/tmp/nextcloud
+  register: nextcloud_stat
+
+- name: Move nextcloud dir
+  shell: "mv /tmp/nextcloud/* {{ nextcloud_web_root }}/"
+  args: 
+    creates="{{ nextcloud_web_root }}" 
+  when: nextcloud_stat.stat.exists
 
 # configure directories permissions
 - include: 'permissions.yml'
