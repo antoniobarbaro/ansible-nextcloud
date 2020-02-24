@@ -48,7 +48,7 @@
 - name: ensure nextcloud.conf nginx config is present
   template:
     src: nginx.conf.j2
-    dest: /etc/nginx/conf.d/nextcloud.conf
+    dest: "/etc/nginx/conf.d/{{ nextcloud_nginx_conf_file }}"
   notify: 
     - reload nginx
 

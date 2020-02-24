@@ -45,3 +45,4 @@ nextcloud_log_rotate_size: '104857600'
 nextcloud_install_nginx_php: true
 nextcloud_install_mariadb: true
 nextcloud_opcache_file: 'opcache.ini'
+nextcloud_nginx_conf_file: 'nextcloud.conf'
