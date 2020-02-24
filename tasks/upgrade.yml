@@ -10,7 +10,7 @@
   become: true
   become_user: nginx
 
-- name: upgrade - stopp web services
+- name: upgrade - stop web services
   service:
     name: '{{ item }}'
     state: stopped
@@ -46,11 +46,21 @@
     name: '{{ nextcloud_web_root }}'
     state: directory
 
-- name: upgarde - ensure new version is unarchived in {{ nextcloud_web_root }}
+- name: upgrade - ensure nextcloud is unarchived in {{ nextcloud_web_root }}
   unarchive:
     src: '{{ nextcloud_repo_url  }}/nextcloud-{{ nextcloud_version }}.tar.bz2'
     remote_src: true
-    dest: '{{ nextcloud_web_root }}/..'
+    dest: '/tmp'
+
+- name: upgrade - test if nextcloud was unarchived
+  stat: path=/tmp/nextcloud
+  register: nextcloud_stat
+
+- name: upgrade - Move nextcloud dir
+  shell: "mv /tmp/nextcloud/* {{ nextcloud_web_root }}/"
+  args: 
+    creates="{{ nextcloud_web_root }}" 
+  when: nextcloud_stat.stat.exists
 
 - name: upgrade - restore config file
   command: 'cp -f {{ nextcloud_backup_dir }}/nextcloud-{{ timestamp.stdout }}/config/config.php {{ nextcloud_web_root }}/config/config.php'
@@ -74,6 +84,16 @@
 
 - name: upgrade - run occ upgrade
   command: 'php {{ nextcloud_web_root }}/occ upgrade'
+  become: true
+  become_user: nginx
+
+- name: upgrade - run occ upgrade indices
+  command: 'php {{ nextcloud_web_root }}/occ db:add-missing-indices'
+  become: true
+  become_user: nginx
+
+- name: upgrade - run occ big int conversion
+  command: 'php {{ nextcloud_web_root }}/occ -n db:convert-filecache-bigint'
   become: true
   become_user: nginx
 
