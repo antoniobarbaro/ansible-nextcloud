@@ -99,3 +99,13 @@
   command: 'php {{ nextcloud_web_root }}/occ config:system:set log_rotate_size --value "{{ nextcloud_log_rotate_size }}" --type=integer'
   become: true
   become_user: nginx                                
+
+- name: add missing indices
+  command: 'php {{ nextcloud_web_root }}/occ db:add-missing-indices'
+  become: true
+  become_user: nginx
+
+- name: run occ big int conversion
+  command: 'php {{ nextcloud_web_root }}/occ -n db:convert-filecache-bigint'
+  become: true
+  become_user: nginx    
